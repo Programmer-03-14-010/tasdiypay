@@ -1,0 +1,44 @@
+{% extends "payments/base_app.html" %}
+{% block title %}Mening to'lovlarim — TasdiqPay{% endblock %}
+{% block content %}
+    <div class="topline">
+        <div>
+            <div class="eyebrow">Tarix</div>
+            <h1>Mening to'lovlarim</h1>
+        </div>
+        <a href="{% url 'pay' %}" class="btn btn-primary">Yangi to'lov</a>
+    </div>
+
+    <div class="panel" style="padding:8px 0;">
+        {% if receipts %}
+            <table class="ledger">
+                <tr>
+                    <th style="padding-left:24px;">Sana</th>
+                    <th>Chek</th>
+                    <th>Holati</th>
+                    <th style="padding-right:24px;"></th>
+                </tr>
+                {% for r in receipts %}
+                <tr>
+                    <td style="padding-left:24px;font-family:var(--font-mono);">{{ r.created_at|date:"d.m.Y H:i" }}</td>
+                    <td>#{{ r.id }}</td>
+                    <td>
+                        {% if r.status == "pending" %}<span class="badge badge-pending">Tekshirilmoqda</span>
+                        {% elif r.status == "approved" %}<span class="badge badge-approved">Qabul qilindi</span>
+                        {% else %}<span class="badge badge-rejected">Bekor qilindi</span>{% endif %}
+                    </td>
+                    <td style="padding-right:24px;text-align:right;">
+                        <a href="{% url 'payment_detail' r.id %}" class="btn btn-ghost btn-sm">Ko'rish</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <div class="glyph">&#128179;</div>
+                <p>Hozircha hech qanday to'lov yubormagansiz.</p>
+                <a href="{% url 'pay' %}" class="btn btn-primary">Birinchi to'lovni qiling</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

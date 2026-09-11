@@ -1,0 +1,10 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>Chekni bekor qilish — {{ receipt.user.username }}</h1>
+<img src="{{ receipt.image.url }}" style="max-height:300px; display:block; margin-bottom:16px;">
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Bekor qilish" class="default" style="background:#dc3545;">
+</form>
+{% endblock %}

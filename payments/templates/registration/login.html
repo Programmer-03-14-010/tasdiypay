@@ -1,0 +1,22 @@
+{% extends "payments/base_auth.html" %}
+{% block title %}Kirish — TasdiqPay{% endblock %}
+{% block content %}
+    <h1>Tizimga kirish</h1>
+    <p class="sub">Hisobingizga kirib, to'lovlaringizni boshqaring.</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="field">
+            <label for="{{ form.username.id_for_label }}">Ism</label>
+            {{ form.username }}
+        </div>
+        <div class="field">
+            <label for="{{ form.password.id_for_label }}">Parol</label>
+            {{ form.password }}
+        </div>
+        {% if form.non_field_errors %}
+            <ul class="errorlist">{% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+        <button type="submit" class="btn btn-primary btn-block">Kirish</button>
+    </form>
+    <p class="auth-switch">Hisobingiz yo'qmi? <a href="{% url 'register' %}">Ro'yxatdan o'tish</a></p>
+{% endblock %}

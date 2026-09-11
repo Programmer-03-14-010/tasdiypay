@@ -1,0 +1,35 @@
+{% extends "payments/base_app.html" %}
+{% block title %}Profil — TasdiqPay{% endblock %}
+{% block content %}
+    <div class="topline">
+        <div>
+            <div class="eyebrow">Hisob</div>
+            <h1>Profil</h1>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="panel">
+            <h3>Shaxsiy ma'lumotlar</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="field-row">
+                    <div class="field">
+                        <label for="{{ form.first_name.id_for_label }}">Ism</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="field">
+                        <label for="{{ form.last_name.id_for_label }}">Familiya</label>
+                        {{ form.last_name }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Saqlash</button>
+            </form>
+        </div>
+        <div class="panel">
+            <h3>Hisob ma'lumotlari</h3>
+            <p><strong>Email:</strong><br>{{ user.email }}</p>
+            <p><strong>Ro'yxatdan o'tgan sana:</strong><br>{{ user.date_joined|date:"d.m.Y" }}</p>
+        </div>
+    </div>
+{% endblock %}

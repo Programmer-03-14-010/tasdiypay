@@ -1,0 +1,39 @@
+{% extends "payments/base_app.html" %}
+{% block title %}To'lov #{{ receipt.id }} — TasdiqPay{% endblock %}
+{% block content %}
+    <div class="topline">
+        <div>
+            <div class="eyebrow"><a href="{% url 'my_payments' %}" style="color:var(--text-muted);text-decoration:none;">&larr; Mening to'lovlarim</a></div>
+            <h1>To'lov #{{ receipt.id }}</h1>
+        </div>
+        {% if receipt.status == "pending" %}<span class="badge badge-pending">Tekshirilmoqda</span>
+        {% elif receipt.status == "approved" %}<span class="badge badge-approved">Qabul qilindi</span>
+        {% else %}<span class="badge badge-rejected">Bekor qilindi</span>{% endif %}
+    </div>
+
+    <div class="grid-2">
+        <div class="panel">
+            <h3>Chek rasmi</h3>
+            <a href="{{ receipt.image.url }}" target="_blank">
+                <img src="{{ receipt.image.url }}" alt="Chek" style="width:100%;border-radius:8px;border:1px solid var(--line);">
+            </a>
+        </div>
+        <div class="panel">
+            <h3>Tafsilotlar</h3>
+            <p><strong>Yuklangan sana:</strong><br>{{ receipt.created_at|date:"d.m.Y H:i" }}</p>
+            {% if receipt.reviewed_at %}
+                <p><strong>Ko'rib chiqilgan sana:</strong><br>{{ receipt.reviewed_at|date:"d.m.Y H:i" }}</p>
+            {% endif %}
+            {% if receipt.status == "rejected" %}
+                <div class="panel" style="background:var(--danger-tint); border-color:rgba(179,38,30,0.25);">
+                    <strong style="color:var(--danger);">Bekor qilish sababi</strong>
+                    <p style="margin:6px 0 0;">{{ receipt.reject_reason }}</p>
+                </div>
+            {% elif receipt.status == "pending" %}
+                <p style="color:var(--text-muted);">Chek admin tomonidan hozircha ko'rib chiqilmoqda.</p>
+            {% else %}
+                <p style="color:var(--success);">To'lov muvaffaqiyatli tasdiqlangan.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

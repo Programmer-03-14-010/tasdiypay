@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TasdiqPay — To'lovni tasdiqlash tizimi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'payments/css/style.css' %}">
+</head>
+<body>
+
+<nav class="landing-nav">
+    <div class="brand">Tasdiq<span>Pay</span></div>
+    <div class="actions">
+        <a href="{% url 'login' %}" class="btn btn-ghost btn-sm">Kirish</a>
+        <a href="{% url 'register' %}" class="btn btn-primary btn-sm">Ro'yxatdan o'tish</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div>
+        <h1>Kartaga o'tkazma qiling, chekni yuklang — qolganini biz tasdiqlaymiz</h1>
+        <p class="lede">To'lovingizni tasdiqlash uchun endi kutib turishga hojat yo'q — chekni yuklaysiz, holatini real vaqtda kuzatasiz.</p>
+        <div class="cta-row">
+            <a href="{% url 'register' %}" class="btn btn-primary">Bepul boshlash</a>
+            <a href="{% url 'login' %}" class="btn btn-ghost">Hisobim bor</a>
+        </div>
+    </div>
+    <div class="hero-art">
+        <svg width="360" height="320" viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg">
+            <rect x="60" y="30" width="200" height="260" rx="10" fill="#101827"/>
+            <path d="M60 270 l10 -12 l10 12 l10 -12 l10 12 l10 -12 l10 12 l10 -12 l10 12 l10 -12 l10 12 l10 -12 l10 12 l10 -12 l10 12 l10 -12 l10 12 V290 H60 Z" fill="#101827"/>
+            <rect x="82" y="56" width="130" height="10" rx="2" fill="#63C9B0"/>
+            <rect x="82" y="80" width="156" height="6" rx="2" fill="#4B5568"/>
+            <rect x="82" y="96" width="156" height="6" rx="2" fill="#4B5568"/>
+            <rect x="82" y="112" width="110" height="6" rx="2" fill="#4B5568"/>
+            <rect x="82" y="140" width="156" height="1.5" fill="#2A3548"/>
+            <rect x="82" y="158" width="90" height="8" rx="2" fill="#F4F6F5"/>
+            <rect x="82" y="176" width="130" height="6" rx="2" fill="#4B5568"/>
+            <rect x="82" y="192" width="80" height="6" rx="2" fill="#4B5568"/>
+            <rect x="82" y="216" width="156" height="1.5" fill="#2A3548"/>
+            <rect x="82" y="234" width="70" height="8" rx="2" fill="#B8860B"/>
+            <circle cx="255" cy="150" r="52" fill="#0E7C66" opacity="0.14"/>
+            <circle cx="255" cy="150" r="38" fill="#0E7C66"/>
+            <path d="M238 150 l12 12 l24 -28" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+</section>
+
+<hr class="perforation">
+
+<section class="section">
+    <div class="kicker">Qanday ishlaydi</div>
+    <h2>Uch qadamda to'lovingiz tasdiqlanadi</h2>
+    <ol class="steps" style="margin-top:26px; max-width:640px;">
+        <li>
+            <div>
+                <div class="step-title">Kartaga o'tkazma qiling</div>
+                <div class="step-desc">Saytda ko'rsatilgan karta raqamiga kerakli summani o'tkazing.</div>
+            </div>
+        </li>
+        <li>
+            <div>
+                <div class="step-title">Chek rasmini yuklang</div>
+                <div class="step-desc">Bank ilovasidagi tasdiqlash chekini yoki screenshot rasmini yuklang.</div>
+            </div>
+        </li>
+        <li>
+            <div>
+                <div class="step-title">Holatni kuzating</div>
+                <div class="step-desc">Chek admin tomonidan ko'rib chiqiladi va natija "Mening to'lovlarim" bo'limida ko'rinadi.</div>
+            </div>
+        </li>
+    </ol>
+</section>
+
+<hr class="perforation">
+
+<section class="section">
+    <div class="grid-3">
+        <div class="panel">
+            <h3>Har bir to'lov kuzatiladi</h3>
+            <p style="color:var(--text-muted); margin:0;">Yuklagan har bir chekingiz holati — tekshirilmoqda, qabul qilindi yoki bekor qilindi — shaxsiy sahifangizda ko'rinadi.</p>
+        </div>
+        <div class="panel">
+            <h3>Aniq sabab bilan javob</h3>
+            <p style="color:var(--text-muted); margin:0;">Agar chek bekor qilinsa, sababi yozma ravishda ko'rsatiladi — nima uchunligini bilasiz.</p>
+        </div>
+        <div class="panel">
+            <h3>Barcha tarix bir joyda</h3>
+            <p style="color:var(--text-muted); margin:0;">O'tgan barcha to'lovlaringiz va cheklaringiz "Mening to'lovlarim" bo'limida saqlanadi.</p>
+        </div>
+    </div>
+</section>
+
+<footer class="landing-footer">
+    <span>&copy; {% now "Y" %} TasdiqPay</span>
+    <span>To'lovlarni tasdiqlash tizimi</span>
+</footer>
+
+</body>
+</html>

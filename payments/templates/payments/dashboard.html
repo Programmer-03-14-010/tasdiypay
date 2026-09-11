@@ -1,0 +1,76 @@
+{% extends "payments/base_app.html" %}
+{% block title %}Bosh sahifa — TasdiqPay{% endblock %}
+{% block content %}
+    <div class="topline">
+        <div>
+            <div class="eyebrow">Xush kelibsiz</div>
+            <h1>Salom, {{ user.first_name }}!</h1>
+        </div>
+        <a href="{% url 'pay' %}" class="btn btn-primary">To'lov qilish</a>
+    </div>
+
+    <div class="grid-3" style="margin-bottom:28px;">
+        <div class="stat-tile pending">
+            <div class="num">{{ stats.pending }}</div>
+            <div class="label">Tekshirilmoqda</div>
+        </div>
+        <div class="stat-tile approved">
+            <div class="num">{{ stats.approved }}</div>
+            <div class="label">Qabul qilingan</div>
+        </div>
+        <div class="stat-tile rejected">
+            <div class="num">{{ stats.rejected }}</div>
+            <div class="label">Bekor qilingan</div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div>
+            <h3>To'lov uchun karta</h3>
+            {% if card %}
+                <div class="receipt-card">
+                    <div class="eyebrow">{{ card.bank_name|default:"Bank karta" }}</div>
+                    <div class="card-number">{{ card.card_number }}</div>
+                    <div class="card-meta">
+                        <span>{{ card.card_holder }}</span>
+                    </div>
+                </div>
+                <div class="receipt-card-foot">
+                    <a href="{% url 'pay' %}" class="btn btn-ghost btn-block">Chek yuklash</a>
+                </div>
+            {% else %}
+                <div class="panel">
+                    <p style="margin:0;color:var(--text-muted);">Hozircha karta ma'lumotlari kiritilmagan.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div>
+            <h3>So'nggi faoliyat</h3>
+            <div class="panel" style="padding:10px 0;">
+                {% if recent %}
+                    <table class="ledger">
+                        {% for r in recent %}
+                        <tr>
+                            <td style="width:60%;">
+                                <div style="font-weight:600;">{{ r.created_at|date:"d M, H:i" }}</div>
+                                <div style="color:var(--text-muted);font-size:0.82rem;">Chek #{{ r.id }}</div>
+                            </td>
+                            <td>
+                                {% if r.status == "pending" %}<span class="badge badge-pending">Tekshirilmoqda</span>
+                                {% elif r.status == "approved" %}<span class="badge badge-approved">Qabul qilindi</span>
+                                {% else %}<span class="badge badge-rejected">Bekor qilindi</span>{% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <div class="empty-state">
+                        <div class="glyph">&#128196;</div>
+                        <p>Hali hech qanday to'lov yo'q.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

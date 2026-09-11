@@ -1,0 +1,91 @@
+{% extends "payments/base_app.html" %}
+{% block title %}To'lov qilish — TasdiqPay{% endblock %}
+{% block content %}
+    <div class="topline">
+        <div>
+            <div class="eyebrow">To'lov</div>
+            <h1>To'lovni amalga oshiring</h1>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div>
+            {% if card %}
+                <div class="receipt-card">
+                    <div class="eyebrow">{{ card.bank_name|default:"Bank karta" }}</div>
+                    <div class="card-number">{{ card.card_number }}</div>
+                    <div class="card-meta">
+                        <span>{{ card.card_holder }}</span>
+                    </div>
+                </div>
+                <div class="receipt-card-foot">
+                    <p style="margin:0;color:var(--text-muted);font-size:0.9rem;">
+                        Yuqoridagi karta raqamiga to'lovni amalga oshiring, so'ng to'lov chekini
+                        (screenshot yoki rasm) o'ng tomondagi forma orqali yuklang.
+                    </p>
+                </div>
+            {% else %}
+                <div class="panel">
+                    <p style="margin:0;color:var(--danger);">Hozircha karta ma'lumotlari kiritilmagan. Admin bilan bog'laning.</p>
+                </div>
+            {% endif %}
+
+            <div style="margin-top:22px;">
+                <ol class="steps">
+                    <li>
+                        <div>
+                            <div class="step-title">To'lovni amalga oshiring</div>
+                            <div class="step-desc">Yuqoridagi karta raqamiga kerakli summani o'tkazing.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="step-title">Chek rasmini yuklang</div>
+                            <div class="step-desc">Bank ilovasidan olingan chek yoki screenshot rasmini yuklang.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="step-title">Tasdiqlanishini kuting</div>
+                            <div class="step-desc">Admin chekni tekshirib, qabul yoki bekor qiladi.</div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div>
+            {% if last_receipt and last_receipt.status == "pending" %}
+                <div class="panel" style="border-color:rgba(184,134,11,0.3); background:var(--gold-tint);">
+                    <span class="badge badge-pending" style="margin-bottom:10px;">Tekshirilmoqda</span>
+                    <p style="margin:0;color:var(--text);">To'lov tekshirilmoqda. Natija tayyor bo'lganda "Mening to'lovlarim" bo'limida ko'rasiz.</p>
+                </div>
+            {% elif last_receipt and last_receipt.status == "rejected" %}
+                <div class="panel" style="border-color:rgba(179,38,30,0.3); background:var(--danger-tint); margin-bottom:20px;">
+                    <span class="badge badge-rejected" style="margin-bottom:10px;">Bekor qilindi</span>
+                    <p style="margin:0;color:var(--text);"><strong>Sabab:</strong> {{ last_receipt.reject_reason }}</p>
+                </div>
+            {% elif last_receipt and last_receipt.status == "approved" %}
+                <div class="panel" style="border-color:rgba(31,122,77,0.3); background:var(--success-tint); margin-bottom:20px;">
+                    <span class="badge badge-approved">Qabul qilindi</span>
+                    <p style="margin:8px 0 0;color:var(--text);">Oxirgi to'lovingiz tasdiqlangan.</p>
+                </div>
+            {% endif %}
+
+            <div class="panel">
+                <h3>To'lov chekini yuklang</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">
+                    Faqat rasm formatidagi fayllar qabul qilinadi (jpg, png).
+                </p>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="field">
+                        {{ form.image }}
+                        {% for error in form.image.errors %}<div class="field"><ul class="errorlist"><li>{{ error }}</li></ul></div>{% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Tugatish</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TasdiqPay{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'payments/css/style.css' %}">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="sidebar-brand">Tasdiq<span>Pay</span></div>
+        <ul class="sidebar-nav">
+            <li><a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"><span class="icon">&#9670;</span> Bosh sahifa</a></li>
+            <li><a href="{% url 'pay' %}" class="{% if request.resolver_match.url_name == 'pay' %}active{% endif %}"><span class="icon">&#9673;</span> To'lov qilish</a></li>
+            <li><a href="{% url 'my_payments' %}" class="{% if request.resolver_match.url_name == 'my_payments' or request.resolver_match.url_name == 'payment_detail' %}active{% endif %}"><span class="icon">&#9776;</span> Mening to'lovlarim</a></li>
+            <li><a href="{% url 'profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}"><span class="icon">&#9673;</span> Profil</a></li>
+        </ul>
+        <div class="sidebar-foot">
+            <div class="sidebar-user">
+                <strong>{{ user.first_name }} {{ user.last_name }}</strong>
+                {{ user.email }}
+            </div>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Chiqish</button>
+            </form>
+            {% if user.is_staff %}
+                <a class="admin-link" href="{% url 'staff_login_redirect' %}">Admin panelga o'tish &rarr;</a>
+            {% endif %}
+        </div>
+    </aside>
+
+    <main class="content">
+        {% if messages %}
+            <ul class="flash-list">
+                {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+            </ul>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</div>
+</body>
+</html>

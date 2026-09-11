@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TasdiqPay{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'payments/css/style.css' %}">
+</head>
+<body>
+<div class="auth-shell">
+    <div class="auth-side">
+        <div class="auth-logo">Tasdiq<span>Pay</span></div>
+        <div class="auth-quote">
+            <h2>To'lovlaringiz aniq va tez tasdiqlanadi</h2>
+            <p>Kartaga o'tkazma qiling, chekni yuklang — qolganini biz tekshiramiz.</p>
+            <ol class="auth-steps">
+                <li><span class="num">1</span> Kartaga to'lovni amalga oshiring</li>
+                <li><span class="num">2</span> Chek rasmini yuklang</li>
+                <li><span class="num">3</span> Tasdiqlanishini kuting</li>
+            </ol>
+        </div>
+        <div></div>
+    </div>
+    <div class="auth-form-side">
+        <div class="auth-card">
+            {% if messages %}
+                <ul class="flash-list">
+                    {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+                </ul>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+</body>
+</html>
